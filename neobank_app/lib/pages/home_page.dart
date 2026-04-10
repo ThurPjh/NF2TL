@@ -10,6 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  bool showBalance = true;
+
   final List<Map<String, dynamic>> transactions = [
     {
       "title": "Salário - Empresa XYZ",
@@ -40,7 +43,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final balance = 12487.65;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("NeoBank", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -57,26 +59,62 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Saldo
-            Card(
+                        Card(
               elevation: 8,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF00D4AA), Color(0xFF00B894)],
+                    colors: [Color.fromARGB(108, 0, 0, 0), Color.fromARGB(104, 0, 0, 0)],
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Saldo disponível", style: TextStyle(fontSize: 16, color: Colors.white70)),
+                    const Text(
+                      "Saldo disponível",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                      ),
+                    ),
+
                     const SizedBox(height: 8),
-                    Text(
-                      "R\$ ${balance.toStringAsFixed(2)}",
-                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          
+                          showBalance
+                              ? "R\$ ${balance.toStringAsFixed(2)}"
+                              : "••••••••",
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+
+                        IconButton(
+                          icon: Icon(
+                            showBalance
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              showBalance = !showBalance;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
